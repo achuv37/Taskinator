@@ -198,8 +198,26 @@ saveTasks();
 };
 var saveTasks = function() {
   localStorage.setItem("tasks", JSON.stringify(tasks));
-}
+};
+var loadTasks = function () {
+  var savedTasks = localStorage.getItem("tasks");
+  // if there are no tasks,set tasks to an empty.
+  if(!savedTasks) {
+    return false;
+  }
+  console.log("Saved tasks found!");
+  // else load up saved tasks
+  //parse in to array of objects
+  savedTasks = JSON.parse(savedTasks);
+  //loop through savedTask array
+  for(var i = 0; i < savedTasks.length; i++) {
+    createTaskEl(savedTasks[i]);
+  } 
+};
+// create a new task
 formEl.addEventListener("submit", taskFormHandler);
-
+// for edit and delete buttons
 pageContentEl.addEventListener("click",taskButtonHandler);
+// for changing the status
 pageContentEl.addEventListener("change", taskStatusChangeHandler);
+loadTasks();
